@@ -1,5 +1,8 @@
 package com.simibubi.create.content.logistics.block.vault;
 
+
+import net.minecraft.world.item.DyeColor;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.AllSpriteShifts;
@@ -18,20 +21,45 @@ import net.minecraft.world.level.block.state.BlockState;
 public class ItemVaultCTBehaviour extends ConnectedTextureBehaviour.Base {
 
 	@Override
-	public CTSpriteShiftEntry getShift(BlockState state, Direction direction, @Nullable TextureAtlasSprite sprite) {
+	public CTSpriteShiftEntry getShift(BlockState state, Direction direction,  @Nullable TextureAtlasSprite sprite) {
 		Axis vaultBlockAxis = ItemVaultBlock.getVaultBlockAxis(state);
 		boolean small = !ItemVaultBlock.isLarge(state);
+		String name = String.valueOf(state.getBlock().getRegistryName());
+		DyeColor color = null;
+		if (name.length() > 17) {
+			color = DyeColor.byName(name.substring(7, name.length() - 11), null);
+		}
+
 		if (vaultBlockAxis == null)
 			return null;
+		if (color != null && small) {
+			if (direction.getAxis() == vaultBlockAxis)
+				return AllSpriteShifts.DYED_VAULT_FRONT.get(color);
+			if (direction == Direction.UP)
+				return AllSpriteShifts.DYED_VAULT_TOP.get(color);
+			if (direction == Direction.DOWN)
+				return AllSpriteShifts.DYED_VAULT_BOTTOM.get(color);
 
-		if (direction.getAxis() == vaultBlockAxis)
-			return AllSpriteShifts.VAULT_FRONT.get(small);
-		if (direction == Direction.UP)
-			return AllSpriteShifts.VAULT_TOP.get(small);
-		if (direction == Direction.DOWN)
-			return AllSpriteShifts.VAULT_BOTTOM.get(small);
+			return AllSpriteShifts.DYED_VAULT_SIDE.get(color);
+		} else if (color != null) {
+			if (direction.getAxis() == vaultBlockAxis)
+				return AllSpriteShifts.DYED_VAULT_FRONT_LARGE.get(color);
+			if (direction == Direction.UP)
+				return AllSpriteShifts.DYED_VAULT_TOP_LARGE.get(color);
+			if (direction == Direction.DOWN)
+				return AllSpriteShifts.DYED_VAULT_BOTTOM_LARGE.get(color);
 
-		return AllSpriteShifts.VAULT_SIDE.get(small);
+			return AllSpriteShifts.DYED_VAULT_SIDE_LARGE.get(color);
+		} else{
+			if (direction.getAxis() == vaultBlockAxis)
+				return AllSpriteShifts.VAULT_FRONT.get(small);
+			if (direction == Direction.UP)
+				return AllSpriteShifts.VAULT_TOP.get(small);
+			if (direction == Direction.DOWN)
+				return AllSpriteShifts.VAULT_BOTTOM.get(small);
+			return AllSpriteShifts.VAULT_SIDE.get(small);
+		}
+
 	}
 
 	@Override

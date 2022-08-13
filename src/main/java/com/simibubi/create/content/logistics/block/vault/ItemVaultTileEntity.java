@@ -1,7 +1,6 @@
 package com.simibubi.create.content.logistics.block.vault;
 
 import java.util.List;
-
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.foundation.config.AllConfigs;
@@ -26,8 +25,8 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
-public class ItemVaultTileEntity extends SmartTileEntity implements IMultiTileContainer.Inventory {
 
+public class ItemVaultTileEntity extends SmartTileEntity implements IMultiTileContainer.Inventory {
 	protected LazyOptional<IItemHandler> itemCapability;
 
 	protected ItemStackHandler inventory;
@@ -250,6 +249,7 @@ public class ItemVaultTileEntity extends SmartTileEntity implements IMultiTileCo
 				for (int zOffset = 0; zOffset < radius; zOffset++) {
 					BlockPos vaultPos = alongZ ? worldPosition.offset(xOffset, zOffset, yOffset)
 						: worldPosition.offset(yOffset, xOffset, zOffset);
+					System.out.println(vaultPos);
 					ItemVaultTileEntity vaultAt =
 						ConnectivityHandler.partAt(AllTileEntities.ITEM_VAULT.get(), level, vaultPos);
 					invs[yOffset * radius * radius + xOffset * radius + zOffset] =

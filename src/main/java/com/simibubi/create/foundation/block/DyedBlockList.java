@@ -36,6 +36,15 @@ public class DyedBlockList<T extends Block> implements Iterable<BlockEntry<T>> {
 		return false;
 	}
 
+	public String getContainColor(Block block) {
+		for (BlockEntry<?> entry : values) {
+			if (entry.is(block)) {
+				return entry.toString();
+			}
+		}
+		return null;
+	}
+
 	@SuppressWarnings("unchecked")
 	public BlockEntry<T>[] toArray() {
 		return (BlockEntry<T>[]) Arrays.copyOf(values, values.length);

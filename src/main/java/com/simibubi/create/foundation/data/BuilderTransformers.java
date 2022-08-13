@@ -33,6 +33,8 @@ import com.simibubi.create.content.curiosities.deco.SlidingDoorMovementBehaviour
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock.Shape;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelItem;
+import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock;
+import com.simibubi.create.content.logistics.block.vault.ItemVaultCTBehaviour;
 import com.simibubi.create.content.logistics.trains.IBogeyBlock;
 import com.simibubi.create.content.logistics.trains.track.StandardBogeyBlock;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
@@ -62,6 +64,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.PistonType;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 

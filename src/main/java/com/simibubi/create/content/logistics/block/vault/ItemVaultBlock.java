@@ -2,20 +2,32 @@ package com.simibubi.create.content.logistics.block.vault;
 
 import javax.annotation.Nullable;
 
+import com.jozufozu.flywheel.backend.instancing.InstancedRenderDispatcher;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
+import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.ItemHelper;
+
+import com.simibubi.create.foundation.utility.BlockHelper;
+
+import com.simibubi.create.foundation.utility.Color;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
+import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -31,17 +43,43 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.ForgeSoundType;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.items.CapabilityItemHandler;
+
+import org.apache.logging.log4j.core.config.plugins.validation.validators.ValidHostValidator;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
 
 public class ItemVaultBlock extends Block implements IWrenchable, ITE<ItemVaultTileEntity> {
 
 	public static final Property<Axis> HORIZONTAL_AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 	public static final BooleanProperty LARGE = BooleanProperty.create("large");
 
-	public ItemVaultBlock(Properties p_i48440_1_) {
+	private final boolean inCreativeTab;
+
+	private final DyeColor color;
+
+	public ItemVaultBlock(Properties p_i48440_1_, DyeColor color, boolean inCreativeTab) {
 		super(p_i48440_1_);
+		this.color = color;
+		this.inCreativeTab = inCreativeTab;
 		registerDefaultState(defaultBlockState().setValue(LARGE, false));
+	}
+
+
+	public static ItemVaultBlock regular(Properties properties) {
+		return new ItemVaultBlock(properties, null, true);
+	}
+	public static ItemVaultBlock dyed(Properties properties, DyeColor color) {
+		return new ItemVaultBlock(properties,color, false);
 	}
 
 	@Override
@@ -108,8 +146,45 @@ public class ItemVaultBlock extends Block implements IWrenchable, ITE<ItemVaultT
 		}
 	}
 
+	@Override
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn,
+		BlockHitResult hit){
+		ItemStack heldItem = player.getItemInHand(handIn);
+
+		boolean isDye = heldItem.is(Tags.Items.DYES);
+		if (isDye) {
+			if (!world.isClientSide)
+				applyDye(state, world, pos, DyeColor.getColor(heldItem));
+			return InteractionResult.SUCCESS;
+		}
+		return InteractionResult.PASS;
+	}
+
+	public void applyDye(BlockState state, Level world, BlockPos pos, @Nullable DyeColor color) {
+		BlockState newState = (color == null ? AllBlocks.ITEM_VAULT : AllBlocks.DYED_ITEM_VAULTS.get(color)).getDefaultState();
+		newState = BlockHelper.copyProperties(state, newState);
+
+		BlockEntity te = world.getBlockEntity(pos);
+		ItemVaultTileEntity vaultTE = (ItemVaultTileEntity) te;
+		for (BlockPos blockPos : getVaultBlocks(world, vaultTE.getController())) {
+			if (state != newState) {
+				world.setBlockAndUpdate(blockPos, newState);
+			}
+		}
+	}
+
+	@Override
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> p_149666_2_) {
+		if (group != CreativeModeTab.TAB_SEARCH && !inCreativeTab)
+			return;
+		super.fillItemCategory(group, p_149666_2_);
+	}
+
 	public static boolean isVault(BlockState state) {
-		return AllBlocks.ITEM_VAULT.has(state);
+		return AllBlocks.ITEM_VAULT.has(state) || AllBlocks.DYED_ITEM_VAULTS.contains(state.getBlock());
+	}
+	public static boolean isVault(BlockState state, BlockState compareState) {
+		return state.getBlock() == compareState.getBlock();
 	}
 
 	@Nullable
@@ -123,6 +198,35 @@ public class ItemVaultBlock extends Block implements IWrenchable, ITE<ItemVaultT
 		if (!isVault(state))
 			return false;
 		return state.getValue(LARGE);
+	}
+	public static List<BlockPos> getVaultBlocks(Level world, BlockPos controllerPos) {
+		List<BlockPos> positions = new LinkedList<>();
+
+		BlockState blockState = world.getBlockState(controllerPos);
+		if (!AllBlocks.ITEM_VAULT.has(blockState))
+			return positions;
+
+		BlockPos current = controllerPos;
+
+		Axis axis = blockState.getValue(HORIZONTAL_AXIS);
+		ItemVaultTileEntity vault = (ItemVaultTileEntity) world.getBlockEntity(current);
+		int length = vault.getHeight();
+		int radius = vault.getWidth();
+
+		boolean alongZ = axis == Axis.Z;
+		for (int yOffset = 0; yOffset < length; yOffset++) {
+			for (int xOffset = 0; xOffset < radius; xOffset++) {
+				for (int zOffset = 0; zOffset < radius; zOffset++) {
+					current = alongZ ? controllerPos.offset(xOffset, zOffset, yOffset) : controllerPos.offset(yOffset, xOffset, zOffset);
+					if (!AllBlocks.ITEM_VAULT.has(world.getBlockState(current)))
+						break;
+					positions.add(current);
+					System.out.println(current);
+				}
+			}
+		}
+
+		return positions;
 	}
 
 	@Override

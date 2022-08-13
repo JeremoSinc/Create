@@ -1629,7 +1629,7 @@ public class AllBlocks {
 			.addLayer(() -> RenderType::cutoutMipped)
 			.register();
 
-	public static final BlockEntry<ItemVaultBlock> ITEM_VAULT = REGISTRATE.block("item_vault", ItemVaultBlock::new)
+	public static final BlockEntry<ItemVaultBlock> ITEM_VAULT = REGISTRATE.block("item_vault", p -> ItemVaultBlock.regular(p))
 		.initialProperties(SharedProperties::softMetal)
 		.properties(p -> p.color(MaterialColor.TERRACOTTA_BLUE))
 		.properties(p -> p.sound(SoundType.NETHERITE_BLOCK)
@@ -1644,6 +1644,31 @@ public class AllBlocks {
 		.item(ItemVaultItem::new)
 		.build()
 		.register();
+
+	public static final DyedBlockList<ItemVaultBlock> DYED_ITEM_VAULTS = new DyedBlockList<>(color -> {
+		String colorName = color.getSerializedName();
+		return REGISTRATE.block(colorName + "_item_vault", p -> ItemVaultBlock.dyed(p, color))
+				.initialProperties(SharedProperties::softMetal)
+				.properties(p -> p.color(color.getMaterialColor()))
+				.properties(p -> p.sound(SoundType.NETHERITE_BLOCK)
+						.explosionResistance(1200))
+				.transform(pickaxeOnly())
+				.blockstate((c, p) -> p.getVariantBuilder(c.get())
+						.forAllStates(s -> ConfiguredModel.builder()
+								.modelFile(p.models().withExistingParent(colorName + "_item_vault", p.modLoc("block/item_vault"))
+										.texture("0", p.modLoc("block/vault/"+colorName+"_vault_bottom"))
+										.texture("1", p.modLoc("block/vault/"+colorName+"_vault_front"))
+										.texture("2", p.modLoc("block/vault/"+colorName+"_vault_side"))
+										.texture("3", p.modLoc("block/vault/"+colorName+"_vault_top"))
+										.texture("particle", p.modLoc("block/vault/"+colorName+"_vault_bottom")))
+								.rotationY(s.getValue(ItemVaultBlock.HORIZONTAL_AXIS) == Axis.X ? 90 : 0)
+								.build()))
+				.loot((p, b) -> p.dropOther(b, ITEM_VAULT.get()))
+				.onRegister(connectedTextures(ItemVaultCTBehaviour::new))
+				.item(ItemVaultItem::new)
+				.build()
+				.register();
+	});
 
 	public static final BlockEntry<AndesiteFunnelBlock> ANDESITE_FUNNEL =
 		REGISTRATE.block("andesite_funnel", AndesiteFunnelBlock::new)

@@ -1,7 +1,9 @@
 package com.simibubi.create.content.logistics.block.vault;
 
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
+import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
 import net.minecraft.core.BlockPos;
@@ -13,17 +15,22 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nullable;
 
 public class ItemVaultItem extends BlockItem {
 
 	public ItemVaultItem(Block p_i48527_1_, Properties p_i48527_2_) {
 		super(p_i48527_1_, p_i48527_2_);
 	}
+
 
 	@Override
 	public InteractionResult place(BlockPlaceContext ctx) {
@@ -49,7 +56,6 @@ public class ItemVaultItem extends BlockItem {
 		}
 		return super.updateCustomBlockEntityTag(p_195943_1_, p_195943_2_, p_195943_3_, p_195943_4_, p_195943_5_);
 	}
-
 	private void tryMultiPlace(BlockPlaceContext ctx) {
 		Player player = ctx.getPlayer();
 		if (player == null)
@@ -62,6 +68,7 @@ public class ItemVaultItem extends BlockItem {
 		BlockPos pos = ctx.getClickedPos();
 		BlockPos placedOnPos = pos.relative(face.getOpposite());
 		BlockState placedOnState = world.getBlockState(placedOnPos);
+
 
 		if (!ItemVaultBlock.isVault(placedOnState))
 			return;
