@@ -1,17 +1,241 @@
 {
   "variants": {
-    "axis=x,large=false": {
+    "axis=x,color=0,large=false": {
       "model": "create:block/item_vault",
       "y": 90
     },
-    "axis=z,large=false": {
+    "axis=z,color=0,large=false": {
       "model": "create:block/item_vault"
     },
-    "axis=x,large=true": {
+    "axis=x,color=1,large=false": {
       "model": "create:block/item_vault",
       "y": 90
     },
-    "axis=z,large=true": {
+    "axis=z,color=1,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=2,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=2,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=3,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=3,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=4,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=4,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=5,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=5,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=6,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=6,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=7,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=7,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=8,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=8,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=9,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=9,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=10,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=10,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=11,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=11,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=12,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=12,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=13,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=13,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=14,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=14,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=15,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=15,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=16,large=false": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=16,large=false": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=0,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=0,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=1,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=1,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=2,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=2,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=3,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=3,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=4,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=4,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=5,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=5,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=6,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=6,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=7,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=7,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=8,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=8,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=9,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=9,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=10,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=10,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=11,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=11,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=12,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=12,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=13,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=13,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=14,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=14,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=15,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=15,large=true": {
+      "model": "create:block/item_vault"
+    },
+    "axis=x,color=16,large=true": {
+      "model": "create:block/item_vault",
+      "y": 90
+    },
+    "axis=z,color=16,large=true": {
       "model": "create:block/item_vault"
     }
   }

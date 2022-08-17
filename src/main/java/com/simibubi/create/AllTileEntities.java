@@ -439,7 +439,6 @@ public class AllTileEntities {
 	public static final BlockEntityEntry<ItemVaultTileEntity> ITEM_VAULT = Create.registrate()
 		.tileEntity("item_vault", ItemVaultTileEntity::new)
 		.validBlocks(AllBlocks.ITEM_VAULT)
-		.validBlocks(AllBlocks.DYED_ITEM_VAULTS.toArray())
 		.register();
 
 	public static final BlockEntityEntry<MechanicalPistonTileEntity> MECHANICAL_PISTON = Create.registrate()

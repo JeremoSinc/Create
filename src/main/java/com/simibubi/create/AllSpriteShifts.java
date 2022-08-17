@@ -27,6 +27,8 @@ public class AllSpriteShifts {
 	DYED_VAULT_SIDE = new EnumMap<>(DyeColor.class), DYED_VAULT_BOTTOM = new EnumMap<>(DyeColor.class), DYED_VAULT_TOP_LARGE = new EnumMap<>(DyeColor.class),
 			DYED_VAULT_FRONT_LARGE = new EnumMap<>(DyeColor.class), DYED_VAULT_SIDE_LARGE = new EnumMap<>(DyeColor.class), DYED_VAULT_BOTTOM_LARGE = new EnumMap<>(DyeColor.class);
 
+
+
 	public static final SpriteShiftEntry BURNER_FLAME =
 		get("block/blaze_burner_flame", "block/blaze_burner_flame_scroll"),
 		SUPER_BURNER_FLAME =
@@ -65,6 +67,7 @@ public class AllSpriteShifts {
 	public static final Couple<CTSpriteShiftEntry> VAULT_TOP = vault("top"), VAULT_FRONT = vault("front"),
 		VAULT_SIDE = vault("side"), VAULT_BOTTOM = vault("bottom");
 
+
 	public static final SpriteShiftEntry BELT = get("block/belt", "block/belt_scroll"),
 		BELT_OFFSET = get("block/belt_offset", "block/belt_scroll"),
 		BELT_DIAGONAL = get("block/belt_diagonal", "block/belt_diagonal_scroll"),
@@ -81,19 +84,22 @@ public class AllSpriteShifts {
 		Arrays.stream(supportedWoodTypes)
 			.forEach(woodType -> WOODEN_WINDOWS.put(woodType, vertical("palettes/" + woodType.name() + "_window")));
 
+
 		for (DyeColor color : DyeColor.values()) {
 			String id = color.getSerializedName();
 			DYED_BELTS.put(color, get("block/belt", "block/belt/" + id + "_scroll"));
 			DYED_OFFSET_BELTS.put(color, get("block/belt_offset", "block/belt/" + id + "_scroll"));
 			DYED_DIAGONAL_BELTS.put(color, get("block/belt_diagonal", "block/belt/" + id + "_diagonal_scroll"));
-			DYED_VAULT_TOP.put(color, getCT(AllCTTypes.CROSS, "vault/"+id+"_vault_top"));
-			DYED_VAULT_TOP_LARGE.put(color, getCT(AllCTTypes.CROSS, "vault/"+id+"_vault_top", "vault/"+id+"_vault_top_large"));
-			DYED_VAULT_FRONT.put(color, getCT(AllCTTypes.CROSS, "vault/"+id+"_vault_front"));
-			DYED_VAULT_FRONT_LARGE.put(color, getCT(AllCTTypes.CROSS, "vault/"+id+"_vault_front", "vault/"+id+"_vault_front_large"));
-			DYED_VAULT_SIDE.put(color, getCT(AllCTTypes.CROSS, "vault/"+id+"_vault_side"));
-			DYED_VAULT_SIDE_LARGE.put(color, getCT(AllCTTypes.CROSS, "vault/"+id+"_vault_side", "vault/"+id+"_vault_side_large"));
-			DYED_VAULT_BOTTOM.put(color, getCT(AllCTTypes.CROSS, "vault/"+id+"_vault_bottom"));
-			DYED_VAULT_BOTTOM_LARGE.put(color, getCT(AllCTTypes.CROSS, "vault/"+id+"_vault_bottom", "vault/"+id+"_vault_bottom_large"));
+
+			DYED_VAULT_TOP.put(color, getCT(AllCTTypes.CROSS, "vault_top", "vault/"+id+"/vault_top"));
+			DYED_VAULT_TOP_LARGE.put(color, getCT(AllCTTypes.CROSS, "vault_top", "vault/"+id+"/vault_top_large"));
+			DYED_VAULT_FRONT.put(color, getCT(AllCTTypes.CROSS, "vault_front", "vault/"+id+"/vault_front"));
+			DYED_VAULT_FRONT_LARGE.put(color, getCT(AllCTTypes.CROSS, "vault_front", "vault/"+id+"/vault_front_large"));
+			DYED_VAULT_SIDE.put(color, getCT(AllCTTypes.CROSS, "vault_side", "vault/"+id+"/vault_side"));
+			DYED_VAULT_SIDE_LARGE.put(color, getCT(AllCTTypes.CROSS, "vault_side", "vault/"+id+"/vault_side_large"));
+			DYED_VAULT_BOTTOM.put(color, getCT(AllCTTypes.CROSS, "vault_bottom", "vault/"+id+"/vault_bottom"));
+			DYED_VAULT_BOTTOM_LARGE.put(color, getCT(AllCTTypes.CROSS, "vault_bottom", "vault/"+id+"/vault_bottom_large"));
+
 		}
 	}
 
@@ -102,7 +108,14 @@ public class AllSpriteShifts {
 		return Couple.createWithContext(b -> getCT(AllCTTypes.CROSS, prefixed, b ? prefixed : prefixed + "_large"));
 	}
 
-	//
+	public static CTSpriteShiftEntry getVaultCT(String name, DyeColor color, boolean small) {
+		String colorString = "";
+		if (color != null)
+			colorString = "vault/"+color.getSerializedName()+"/";
+		if (small)
+			return getCT(AllCTTypes.CROSS, "vault_" + name, colorString + "vault_" + name);
+		return getCT(AllCTTypes.CROSS, "vault_"+name, colorString+"vault_"+name+"_large");
+	}
 
 	private static CTSpriteShiftEntry omni(String name) {
 		return getCT(AllCTTypes.OMNIDIRECTIONAL, name);

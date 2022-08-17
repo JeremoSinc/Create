@@ -24,42 +24,18 @@ public class ItemVaultCTBehaviour extends ConnectedTextureBehaviour.Base {
 	public CTSpriteShiftEntry getShift(BlockState state, Direction direction,  @Nullable TextureAtlasSprite sprite) {
 		Axis vaultBlockAxis = ItemVaultBlock.getVaultBlockAxis(state);
 		boolean small = !ItemVaultBlock.isLarge(state);
-		String name = String.valueOf(state.getBlock().getRegistryName());
-		DyeColor color = null;
-		if (name.length() > 17) {
-			color = DyeColor.byName(name.substring(7, name.length() - 11), null);
-		}
-
+		DyeColor color = ItemVaultBlock.getVaultBlockColor(state);
 		if (vaultBlockAxis == null)
 			return null;
-		if (color != null && small) {
-			if (direction.getAxis() == vaultBlockAxis)
-				return AllSpriteShifts.DYED_VAULT_FRONT.get(color);
-			if (direction == Direction.UP)
-				return AllSpriteShifts.DYED_VAULT_TOP.get(color);
-			if (direction == Direction.DOWN)
-				return AllSpriteShifts.DYED_VAULT_BOTTOM.get(color);
 
-			return AllSpriteShifts.DYED_VAULT_SIDE.get(color);
-		} else if (color != null) {
-			if (direction.getAxis() == vaultBlockAxis)
-				return AllSpriteShifts.DYED_VAULT_FRONT_LARGE.get(color);
-			if (direction == Direction.UP)
-				return AllSpriteShifts.DYED_VAULT_TOP_LARGE.get(color);
-			if (direction == Direction.DOWN)
-				return AllSpriteShifts.DYED_VAULT_BOTTOM_LARGE.get(color);
+		if (direction.getAxis() == vaultBlockAxis){
+			return AllSpriteShifts.getVaultCT("front", color, small);}
+		if (direction == Direction.UP)
+			return AllSpriteShifts.getVaultCT("top", color, small);
+		if (direction == Direction.DOWN)
+			return AllSpriteShifts.getVaultCT("bottom", color, small);
 
-			return AllSpriteShifts.DYED_VAULT_SIDE_LARGE.get(color);
-		} else{
-			if (direction.getAxis() == vaultBlockAxis)
-				return AllSpriteShifts.VAULT_FRONT.get(small);
-			if (direction == Direction.UP)
-				return AllSpriteShifts.VAULT_TOP.get(small);
-			if (direction == Direction.DOWN)
-				return AllSpriteShifts.VAULT_BOTTOM.get(small);
-			return AllSpriteShifts.VAULT_SIDE.get(small);
-		}
-
+		return AllSpriteShifts.getVaultCT("side", color, small);
 	}
 
 	@Override

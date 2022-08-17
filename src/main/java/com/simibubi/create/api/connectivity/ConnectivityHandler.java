@@ -87,6 +87,7 @@ public class ConnectivityHandler {
 
 				if (next.getX() <= minX || next.getY() <= minY || next.getZ() <= minZ)
 					continue;
+
 				if (visited.contains(next))
 					continue;
 				T nextBe = partAt(type, level, next);
@@ -228,7 +229,6 @@ public class ConnectivityHandler {
 			return amount;
 
 		Object extraData = be.getExtraData();
-
 		for (int yOffset = 0; yOffset < height; yOffset++) {
 			for (int xOffset = 0; xOffset < width; xOffset++) {
 				for (int zOffset = 0; zOffset < width; zOffset++) {
@@ -244,7 +244,6 @@ public class ConnectivityHandler {
 						continue;
 
 					extraData = be.modifyExtraData(extraData);
-
 					if (part instanceof IMultiTileContainer.Fluid ifluidPart && ifluidPart.hasTank()) {
 						IFluidTank tankAt = ifluidPart.getTank(0);
 						FluidStack fluidAt = tankAt.getFluid();
@@ -316,13 +315,13 @@ public class ConnectivityHandler {
 		for (int yOffset = 0; yOffset < height; yOffset++) {
 			for (int xOffset = 0; xOffset < width; xOffset++) {
 				for (int zOffset = 0; zOffset < width; zOffset++) {
-					
+
 					BlockPos pos = switch (axis) {
 					case X -> origin.offset(yOffset, xOffset, zOffset);
 					case Y -> origin.offset(xOffset, yOffset, zOffset);
 					case Z -> origin.offset(xOffset, zOffset, yOffset);
 					};
-					
+
 					T partAt = partAt(be.getType(), level, pos);
 					if (partAt == null)
 						continue;
@@ -354,19 +353,19 @@ public class ConnectivityHandler {
 						frontier.add(partAt);
 						partAt.preventConnectivityUpdate();
 					}
-					if (cache != null) 
+					if (cache != null)
 						cache.put(pos, partAt);
 				}
 			}
 		}
-		
+
 		if (be instanceof IMultiTileContainer.Inventory iinv && iinv.hasInventory())
 			be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 				.invalidate();
 		if (be instanceof IMultiTileContainer.Fluid ifluid && ifluid.hasTank())
 			be.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
 				.invalidate();
-		
+
 		if (tryReconnect)
 			formMulti(be.getType(), level, cache == null ? new SearchCache<>() : cache, frontier);
 	}
