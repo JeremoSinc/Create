@@ -50,10 +50,10 @@ public class ItemVaultScenes {
 
 		BlockPos frontVault = util.grid.at(3, 2, 1);
 		scene.overlay.showText(60)
-			.text("Item Vaults can be used to store large amounts of items")
-			.attachKeyFrame()
-			.placeNearTarget()
-			.pointAt(util.vector.blockSurface(frontVault, Direction.NORTH));
+				.text("Item Vaults can be used to store large amounts of items")
+				.attachKeyFrame()
+				.placeNearTarget()
+				.pointAt(util.vector.blockSurface(frontVault, Direction.NORTH));
 		scene.idle(70);
 
 		scene.world.hideIndependentSection(chestLink, Direction.DOWN);
@@ -61,17 +61,17 @@ public class ItemVaultScenes {
 
 		ItemStack hand = AllItems.BRASS_HAND.asStack();
 		scene.overlay
-			.showControls(new InputWindowElement(util.vector.blockSurface(frontVault, Direction.NORTH), Pointing.RIGHT)
-				.showing(AllIcons.I_MTD_CLOSE)
-				.withItem(hand), 40);
+				.showControls(new InputWindowElement(util.vector.blockSurface(frontVault, Direction.NORTH), Pointing.RIGHT)
+						.showing(AllIcons.I_MTD_CLOSE)
+						.withItem(hand), 40);
 		scene.idle(7);
 
 		scene.overlay.showText(60)
-			.text("However, contents cannot be added or taken manually")
-			.attachKeyFrame()
-			.colored(PonderPalette.RED)
-			.placeNearTarget()
-			.pointAt(util.vector.blockSurface(frontVault, Direction.WEST));
+				.text("However, contents cannot be added or taken manually")
+				.attachKeyFrame()
+				.colored(PonderPalette.RED)
+				.placeNearTarget()
+				.pointAt(util.vector.blockSurface(frontVault, Direction.WEST));
 		scene.idle(70);
 
 		scene.world.showSection(largeCog, Direction.UP);
@@ -80,14 +80,14 @@ public class ItemVaultScenes {
 		scene.idle(20);
 
 		scene.overlay.showText(80)
-			.text("Any components for item transfer can both insert...")
-			.attachKeyFrame()
-			.colored(PonderPalette.GREEN)
-			.placeNearTarget()
-			.pointAt(util.vector.topOf(2, 2, 3));
+				.text("Any components for item transfer can both insert...")
+				.attachKeyFrame()
+				.colored(PonderPalette.GREEN)
+				.placeNearTarget()
+				.pointAt(util.vector.topOf(2, 2, 3));
 
 		ItemStack[] junk =
-			{ new ItemStack(Items.APPLE), new ItemStack(Items.GOLD_INGOT, 8), new ItemStack(Items.TUFF, 32) };
+				{ new ItemStack(Items.APPLE), new ItemStack(Items.GOLD_INGOT, 8), new ItemStack(Items.TUFF, 32) };
 		for (int i = 0; i < junk.length + 2; i++) {
 			scene.idle(4);
 
@@ -108,10 +108,10 @@ public class ItemVaultScenes {
 		scene.idle(15);
 
 		scene.overlay.showText(80)
-			.text("...and take contents from this container")
-			.colored(PonderPalette.GREEN)
-			.placeNearTarget()
-			.pointAt(util.vector.topOf(2, 1, 1));
+				.text("...and take contents from this container")
+				.colored(PonderPalette.GREEN)
+				.placeNearTarget()
+				.pointAt(util.vector.topOf(2, 1, 1));
 
 		for (int i = 0; i < junk.length; i++) {
 			scene.world.createItemOnBeltLike(util.grid.at(2, 1, 1), Direction.EAST, junk[i]);
@@ -136,10 +136,10 @@ public class ItemVaultScenes {
 		scene.idle(10);
 
 		scene.overlay.showText(60)
-			.text("Item Vaults can be combined to increase the total capacity")
-			.attachKeyFrame()
-			.placeNearTarget()
-			.pointAt(util.vector.topOf(2, 1, 2));
+				.text("Item Vaults can be combined to increase the total capacity")
+				.attachKeyFrame()
+				.placeNearTarget()
+				.pointAt(util.vector.topOf(2, 1, 2));
 		scene.idle(40);
 
 		ElementLink<WorldSectionElement> s2 = scene.world.showIndependentSection(single, Direction.DOWN);
@@ -170,10 +170,10 @@ public class ItemVaultScenes {
 		scene.idle(25);
 
 		scene.overlay.showText(60)
-			.text("Their base square can be up to 3 blocks wide...")
-			.attachKeyFrame()
-			.placeNearTarget()
-			.pointAt(util.vector.blockSurface(util.grid.at(2, 2, 2), Direction.NORTH));
+				.text("Their base square can be up to 3 blocks wide...")
+				.attachKeyFrame()
+				.placeNearTarget()
+				.pointAt(util.vector.blockSurface(util.grid.at(2, 2, 2), Direction.NORTH));
 		scene.idle(40);
 
 		s1 = scene.world.showIndependentSection(single, Direction.DOWN);
@@ -230,10 +230,10 @@ public class ItemVaultScenes {
 
 		Vec3 blockSurface = util.vector.blockSurface(util.grid.at(1, 3, 3), Direction.NORTH);
 		scene.overlay.showText(60)
-			.text("...and grow in length up to 3x their diameter")
-			.attachKeyFrame()
-			.placeNearTarget()
-			.pointAt(blockSurface);
+				.text("...and grow in length up to 3x their diameter")
+				.attachKeyFrame()
+				.placeNearTarget()
+				.pointAt(blockSurface);
 
 		InputWindowElement dyeInput = new InputWindowElement(util.vector.centerOf(util.grid.at(1,1,1)), Pointing.RIGHT)
 				.withItem(new ItemStack(Items.CYAN_DYE));

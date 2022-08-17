@@ -43,10 +43,10 @@ public class ItemVaultCTBehaviour extends ConnectedTextureBehaviour.Base {
 		Axis vaultBlockAxis = ItemVaultBlock.getVaultBlockAxis(state);
 		boolean alongX = vaultBlockAxis == Axis.X;
 		if (face.getAxis()
-			.isVertical() && alongX)
+				.isVertical() && alongX)
 			return super.getUpDirection(reader, pos, state, face).getClockWise();
 		if (face.getAxis() == vaultBlockAxis || face.getAxis()
-			.isVertical())
+				.isVertical())
 			return super.getUpDirection(reader, pos, state, face);
 		return Direction.fromAxisAndDirection(vaultBlockAxis, alongX ? AxisDirection.POSITIVE : AxisDirection.NEGATIVE);
 	}
@@ -55,10 +55,10 @@ public class ItemVaultCTBehaviour extends ConnectedTextureBehaviour.Base {
 	protected Direction getRightDirection(BlockAndTintGetter reader, BlockPos pos, BlockState state, Direction face) {
 		Axis vaultBlockAxis = ItemVaultBlock.getVaultBlockAxis(state);
 		if (face.getAxis()
-			.isVertical() && vaultBlockAxis == Axis.X)
+				.isVertical() && vaultBlockAxis == Axis.X)
 			return super.getRightDirection(reader, pos, state, face).getClockWise();
 		if (face.getAxis() == vaultBlockAxis || face.getAxis()
-			.isVertical())
+				.isVertical())
 			return super.getRightDirection(reader, pos, state, face);
 		return Direction.fromAxisAndDirection(Axis.Y, face.getAxisDirection());
 	}
@@ -69,7 +69,7 @@ public class ItemVaultCTBehaviour extends ConnectedTextureBehaviour.Base {
 
 	@Override
 	public boolean connectsTo(BlockState state, BlockState other, BlockAndTintGetter reader, BlockPos pos,
-		BlockPos otherPos, Direction face) {
+							  BlockPos otherPos, Direction face) {
 		return state == other && ConnectivityHandler.isConnected(reader, pos, otherPos); //ItemVaultConnectivityHandler.isConnected(reader, pos, otherPos);
 	}
 

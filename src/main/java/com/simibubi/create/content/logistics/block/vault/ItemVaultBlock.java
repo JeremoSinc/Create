@@ -69,19 +69,19 @@ public class ItemVaultBlock extends Block implements IWrenchable, ITE<ItemVaultT
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext pContext) {
 		if (pContext.getPlayer() == null || !pContext.getPlayer()
-			.isSteppingCarefully()) {
+				.isSteppingCarefully()) {
 			BlockState placedOn = pContext.getLevel()
-				.getBlockState(pContext.getClickedPos()
-					.relative(pContext.getClickedFace()
-						.getOpposite()));
+					.getBlockState(pContext.getClickedPos()
+							.relative(pContext.getClickedFace()
+									.getOpposite()));
 			Axis preferredAxis = getVaultBlockAxis(placedOn);
 			if (preferredAxis != null)
 				return this.defaultBlockState()
-					.setValue(HORIZONTAL_AXIS, preferredAxis);
+						.setValue(HORIZONTAL_AXIS, preferredAxis);
 		}
 		return this.defaultBlockState()
-			.setValue(HORIZONTAL_AXIS, pContext.getHorizontalDirection()
-				.getAxis());
+				.setValue(HORIZONTAL_AXIS, pContext.getHorizontalDirection()
+						.getAxis());
 	}
 
 	@Override
@@ -96,10 +96,10 @@ public class ItemVaultBlock extends Block implements IWrenchable, ITE<ItemVaultT
 	@Override
 	public InteractionResult onWrenched(BlockState state, UseOnContext context) {
 		if (context.getClickedFace()
-			.getAxis()
-			.isVertical()) {
+				.getAxis()
+				.isVertical()) {
 			BlockEntity te = context.getLevel()
-				.getBlockEntity(context.getClickedPos());
+					.getBlockEntity(context.getClickedPos());
 			if (te instanceof ItemVaultTileEntity) {
 				ItemVaultTileEntity vault = (ItemVaultTileEntity) te;
 				ConnectivityHandler.splitMulti(vault);
@@ -126,7 +126,7 @@ public class ItemVaultBlock extends Block implements IWrenchable, ITE<ItemVaultT
 
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn,
-		BlockHitResult hit){
+								 BlockHitResult hit){
 		ItemStack heldItem = player.getItemInHand(handIn);
 
 		boolean hasWater = EmptyingByBasin.emptyItem(world, heldItem, true)
@@ -197,7 +197,7 @@ public class ItemVaultBlock extends Block implements IWrenchable, ITE<ItemVaultT
 	public BlockState rotate(BlockState state, Rotation rot) {
 		Axis axis = state.getValue(HORIZONTAL_AXIS);
 		return state.setValue(HORIZONTAL_AXIS, rot.rotate(Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE))
-			.getAxis());
+				.getAxis());
 	}
 
 	@Override
@@ -207,15 +207,15 @@ public class ItemVaultBlock extends Block implements IWrenchable, ITE<ItemVaultT
 
 	// Vaults are less noisy when placed in batch
 	public static final SoundType SILENCED_METAL =
-		new ForgeSoundType(0.1F, 1.5F, () -> SoundEvents.NETHERITE_BLOCK_BREAK, () -> SoundEvents.NETHERITE_BLOCK_STEP,
-			() -> SoundEvents.NETHERITE_BLOCK_PLACE, () -> SoundEvents.NETHERITE_BLOCK_HIT,
-			() -> SoundEvents.NETHERITE_BLOCK_FALL);
+			new ForgeSoundType(0.1F, 1.5F, () -> SoundEvents.NETHERITE_BLOCK_BREAK, () -> SoundEvents.NETHERITE_BLOCK_STEP,
+					() -> SoundEvents.NETHERITE_BLOCK_PLACE, () -> SoundEvents.NETHERITE_BLOCK_HIT,
+					() -> SoundEvents.NETHERITE_BLOCK_FALL);
 
 	@Override
 	public SoundType getSoundType(BlockState state, LevelReader world, BlockPos pos, Entity entity) {
 		SoundType soundType = super.getSoundType(state, world, pos, entity);
 		if (entity != null && entity.getPersistentData()
-			.contains("SilenceVaultSound"))
+				.contains("SilenceVaultSound"))
 			return SILENCED_METAL;
 		return soundType;
 	}
@@ -228,10 +228,10 @@ public class ItemVaultBlock extends Block implements IWrenchable, ITE<ItemVaultT
 	@Override
 	public int getAnalogOutputSignal(BlockState pState, Level pLevel, BlockPos pPos) {
 		return getTileEntityOptional(pLevel, pPos)
-			.map(vte -> vte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
-			.map(lo -> lo.map(ItemHelper::calcRedstoneFromInventory)
-				.orElse(0))
-			.orElse(0);
+				.map(vte -> vte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
+				.map(lo -> lo.map(ItemHelper::calcRedstoneFromInventory)
+						.orElse(0))
+				.orElse(0);
 	}
 
 	@Override

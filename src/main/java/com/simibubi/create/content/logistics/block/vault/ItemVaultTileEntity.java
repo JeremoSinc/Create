@@ -117,17 +117,17 @@ public class ItemVaultTileEntity extends SmartTileEntity implements IMultiTileCo
 		System.out.println("applyColor called, setting to: "+colorID);
 
 		for (BlockPos pos : ItemVaultBlock.getVaultBlocks(level, getController())) {
-				BlockState blockState = level.getBlockState(pos);
-				BlockEntity te = level.getBlockEntity(pos);
-				ItemVaultTileEntity vault = (ItemVaultTileEntity) te;
-				if (!ItemVaultBlock.isVault(blockState))
-					continue;
-				vault.getControllerTE().color = colorID;
-				level.setBlock(pos, blockState.setValue(ItemVaultBlock.COLOR, colorID), 22);
-				vault.setChanged();
-				vault.sendData();
-			}
+			BlockState blockState = level.getBlockState(pos);
+			BlockEntity te = level.getBlockEntity(pos);
+			ItemVaultTileEntity vault = (ItemVaultTileEntity) te;
+			if (!ItemVaultBlock.isVault(blockState))
+				continue;
+			vault.getControllerTE().color = colorID;
+			level.setBlock(pos, blockState.setValue(ItemVaultBlock.COLOR, colorID), 22);
+			vault.setChanged();
+			vault.sendData();
 		}
+	}
 
 	@Override
 	public void tick() {
@@ -152,7 +152,7 @@ public class ItemVaultTileEntity extends SmartTileEntity implements IMultiTileCo
 	@Override
 	public boolean isController() {
 		return controller == null || worldPosition.getX() == controller.getX()
-			&& worldPosition.getY() == controller.getY() && worldPosition.getZ() == controller.getZ();
+				&& worldPosition.getY() == controller.getY() && worldPosition.getZ() == controller.getZ();
 	}
 
 	private void onPositionChanged() {
@@ -236,7 +236,7 @@ public class ItemVaultTileEntity extends SmartTileEntity implements IMultiTileCo
 		}
 
 		boolean changeOfController =
-			controllerBefore == null ? controller != null : !controllerBefore.equals(controller);
+				controllerBefore == null ? controller != null : !controllerBefore.equals(controller);
 		if (hasLevel() && (changeOfController || prevSize != radius || prevLength != length))
 			level.setBlocksDirty(getBlockPos(), Blocks.AIR.defaultBlockState(), getBlockState());
 	}
@@ -299,11 +299,11 @@ public class ItemVaultTileEntity extends SmartTileEntity implements IMultiTileCo
 			for (int xOffset = 0; xOffset < radius; xOffset++) {
 				for (int zOffset = 0; zOffset < radius; zOffset++) {
 					BlockPos vaultPos = alongZ ? worldPosition.offset(xOffset, zOffset, yOffset)
-						: worldPosition.offset(yOffset, xOffset, zOffset);
+							: worldPosition.offset(yOffset, xOffset, zOffset);
 					ItemVaultTileEntity vaultAt =
-						ConnectivityHandler.partAt(AllTileEntities.ITEM_VAULT.get(), level, vaultPos);
+							ConnectivityHandler.partAt(AllTileEntities.ITEM_VAULT.get(), level, vaultPos);
 					invs[yOffset * radius * radius + xOffset * radius + zOffset] =
-						vaultAt != null ? vaultAt.inventory : new ItemStackHandler();
+							vaultAt != null ? vaultAt.inventory : new ItemStackHandler();
 				}
 			}
 		}
